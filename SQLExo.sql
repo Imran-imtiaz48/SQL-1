@@ -1,9 +1,11 @@
---7 Afficher le nombre d'individus en fonction de l'anciennete et du sinistre; interpretez
-select anciennete, sinistre, count(*) 
-from dataia_nancy2
-group by anciennete, sinistre;
+-- Display the number of individuals based on seniority and incidents; interpret
+SELECT anciennete, sinistre, COUNT(*) AS count
+FROM dataia_nancy2
+GROUP BY anciennete, sinistre;
 
---8 afficher le nombre d'individus en pourcentage en fonction de l'anciennete et du sinistre, interpretez
-select anciennete, sinistre, count(*) as 'nombre',concat(round(count(*)*100/(select count(*) from dataia_nancy2),2),'%') AS percentage
-from dataia_nancy2
-group by anciennete, sinistre;
+-- Display the number of individuals as a percentage based on seniority and incidents; interpret
+SELECT anciennete, sinistre, 
+    COUNT(*) AS count, 
+    CONCAT(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM dataia_nancy2), 2), '%') AS percentage
+FROM dataia_nancy2
+GROUP BY anciennete, sinistre;
