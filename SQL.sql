@@ -1,32 +1,25 @@
+USE dataia_Nancy;
 
-# test
-use dataia_Nancy;
--- table6
-/* Le nombre d'individus en fonction de l'anciennete et du sinistre*/ 
-SELECT anciennete,sinistre, count(*)
+-- Count the number of individuals based on seniority and incidents
+SELECT anciennete, sinistre, COUNT(*)
 FROM dataia_Nancy
-GROUP BY anciennete,sinistre ;
+GROUP BY anciennete, sinistre;
 
-/* Le nombre d'individu(comme prcedemment) en fonction du %age total*/ 
-SELECT anciennete,sinistre, count(*) /
-    (SELECT count(*) from dataia_Nancy)*100  /* Sous requete dans une fonction select, exprimé entre parenthese, multiplié par 100 pour avoir un %age*/ 
+-- Count the number of individuals based on the total percentage
+SELECT anciennete, sinistre, 
+    COUNT(*) / (SELECT COUNT(*) FROM dataia_Nancy) * 100 AS percentage
 FROM dataia_Nancy
-GROUP BY anciennete,sinistre ;
+GROUP BY anciennete, sinistre;
 
--- nico P
-alter table projetA add id int not null PRIMARY KEY NOT NULL AUTO_INCREMENT;
-alter table projetB add id int not null PRIMARY KEY NOT NULL AUTO_INCREMENT;
+-- Add a primary key with auto increment to the projetA and projetB tables
+ALTER TABLE projetA 
+ADD id INT NOT NULL PRIMARY KEY AUTO_INCREMENT;
 
-create table projetC as
-(
-    select * from projetA
-    natural join projetB
-)
+ALTER TABLE projetB 
+ADD id INT NOT NULL PRIMARY KEY AUTO_INCREMENT;
 
-
-
-create table projetC
-as select * FROM projetA natural join ProjetB;
-
-
-
+-- Create the projetC table by joining projetA and projetB
+CREATE TABLE projetC AS
+SELECT * 
+FROM projetA
+NATURAL JOIN projetB;
